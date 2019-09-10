@@ -1,11 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[35]:
-
-
+# Written by: Noah Anderson
 import requests
-import pprint
 import json
 
 # Change number to easily readable percentage with 2 decimal points
@@ -14,7 +8,7 @@ def changeToPercent(n):
     perc = round(perc, 2)
     return perc
 
-#Converts a time in seconds to a Min:Sec format
+# Converts a time in seconds to a Min:Sec format
 def changeToTime(n):
     time = int(n)
     seconds = time % 60
@@ -55,16 +49,3 @@ sortedWinrate = sorted(winrate, key = lambda i: i["winrate"], reverse=True)
 # Print the list
 for i in sortedWinrate:
     print("Item name: ", i["item_name"], "Timing: ", i["item_time"], " Winrate: ", i["winrate"], "%")
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
