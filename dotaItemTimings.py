@@ -1,6 +1,7 @@
 # Written by: Noah Anderson
 import requests
 import json
+import heroInfo
 
 # Change number to easily readable percentage with 2 decimal points
 def changeToPercent(n):
@@ -20,7 +21,15 @@ def changeToTime(n):
     else:
         return str(minutes) + ':' + str(seconds)
 
-hero = int(input("Please enter the ID of the Hero: "))
+# Asks user to enter the name of a hero in DotA 2
+found = False    
+while found == False:
+    inpt = str(input("Please enter the name of the Hero: "))
+    
+    # Find the id of user input
+    heroID = heroInfo.getHeroID(inpt)
+    if heroID != -1:
+        found = True
 
 # Sends request to the OpenDota API to get data on item timings
 parameter = {"hero_id" : hero}
@@ -37,9 +46,8 @@ cleanedTimings = [s for s in itemTimings if int(s["wins"]) > 100]
 for items in cleanedTimings:
     wr = changeToPercent((float(items["wins"]) / float(items["games"])))
     
-    if items["item"] in winrate:
-        index = winrate.index(items["item"])
-        winrate[index] = {"item_name": items["item"], "item_time": changeToTime(items["time"]), "winrate": wr}
+    if wr < winrate[index]["winrate"]:
+            winrate[index] = {"item_name": items["item"], "item_time": changeToTime(items["time"]), "winrate": wr}
     else:          
         winrate.append({"item_name": items["item"], "item_time": changeToTime(items["time"]), "winrate": wr})
 
